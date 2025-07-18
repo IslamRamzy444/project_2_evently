@@ -44,6 +44,9 @@ dependencies:
   icons_plus: ^5.0.0
   font_awesome_flutter: ^10.8.0
   introduction_screen: ^3.1.17
+  firebase_core: ^3.15.1
+  cloud_firestore: ^5.6.11
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

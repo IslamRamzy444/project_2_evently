@@ -6,13 +6,14 @@ class AppTheme {
   static final ThemeData lightTheme=ThemeData(
     primaryColor: AppColors.primaryLight,
     focusColor: AppColors.whiteColor,
+    secondaryHeaderColor: AppColors.blackColor,
     hintColor: AppColors.primaryLight,
-    primaryColorDark: AppColors.whiteColor,
     primaryColorLight: AppColors.blackColor,
+    primaryColorDark: AppColors.greyColor,
     dividerColor: AppColors.whiteColor3,
     scaffoldBackgroundColor: AppColors.whiteColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primaryLight,
+      backgroundColor: AppColors.transparentColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
@@ -36,8 +37,9 @@ class AppTheme {
     textTheme: TextTheme(
       bodyMedium: AppStyles.mediumBlack16,
       headlineMedium: AppStyles.mediumPrimary16,
-      headlineSmall: AppStyles.mediumWhite16,
-      headlineLarge: AppStyles.boldBlack20
+      headlineLarge: AppStyles.boldBlack20,
+      headlineSmall: AppStyles.boldWhite16,
+      bodySmall: AppStyles.mediumGrey16
     )
   );
 
@@ -45,13 +47,14 @@ class AppTheme {
   static final ThemeData darkTheme=ThemeData(
     primaryColor: AppColors.primaryDark,
     focusColor: AppColors.primaryLight,
+    secondaryHeaderColor: AppColors.whiteColor,
     hintColor: AppColors.whiteColor,
-    primaryColorDark: AppColors.whiteColor,
     primaryColorLight: AppColors.whiteColor,
+    primaryColorDark: AppColors.whiteColor,
     dividerColor: AppColors.primaryDark,
     scaffoldBackgroundColor: AppColors.primaryDark,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primaryDark,
+      backgroundColor: AppColors.transparentColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
@@ -75,8 +78,9 @@ class AppTheme {
     textTheme: TextTheme(
       bodyMedium: AppStyles.mediumWhite16,
       headlineMedium: AppStyles.mediumWhite16,
-      headlineSmall: AppStyles.mediumWhite16,
-      headlineLarge: AppStyles.boldWhite20
+      headlineLarge: AppStyles.boldWhite20,
+      headlineSmall: AppStyles.boldPrimaryDark16,
+      bodySmall: AppStyles.mediumWhite16
     )
   );
 }

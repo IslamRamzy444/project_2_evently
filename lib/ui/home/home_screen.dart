@@ -6,6 +6,7 @@ import 'package:project_2_evently/ui/home/tabs/map/map_tab.dart';
 import 'package:project_2_evently/ui/home/tabs/profile/profile_tab.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
+import 'package:project_2_evently/utils/app_routes.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: tabs[selectedIndex],
       floatingActionButton: FloatingActionButton(
         onPressed:() {
-          
+          Navigator.pushNamed(context, AppRoutes.addEventScreenRouteName);
         },
         child: Icon(Icons.add,color: AppColors.whiteColor,size: 35,), 
       ),

@@ -38,7 +38,7 @@ class _IntroScreen2State extends State<IntroScreen2> {
           },
           dotsDecorator: DotsDecorator(
             size: Size.fromRadius(0.01*height),
-            activeSize: Size(width*0.05, height*0.02),
+            activeSize: Size(width*0.08, height*0.02),
             activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(36)),
             activeColor: AppColors.primaryLight,
             color: Theme.of(context).primaryColorLight,
