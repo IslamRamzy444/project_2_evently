@@ -33,4 +33,7 @@ class AppAssets {
   static const String holidayImageLight="assets/images/holiday-image-light.png";
   static const String bookClubImageLight="assets/images/book-club-image-light.png";
   static const String routeLogo="assets/images/route-logo.png";
+  static const String writingIcon="assets/images/writing-icon.png";
+  static const String calendarIcon="assets/images/calendar-icon.png";
+  static const String clockIcon="assets/images/clock-icon.png";
 }

@@ -21,7 +21,7 @@ class _IntroScreen1State extends State<IntroScreen1> {
   late var width;
   late var height;
   late var languageProvider;
-  late var themeProvier;
+  late var themeProvider;
   int selectedLanguageIndex=0;
   int selectedThemeIndex=0;
   @override
@@ -29,7 +29,7 @@ class _IntroScreen1State extends State<IntroScreen1> {
     width=MediaQuery.sizeOf(context).width;
     height=MediaQuery.sizeOf(context).height;
     languageProvider=Provider.of<AppLanguageProvider>(context);
-    themeProvier=Provider.of<AppThemeProvider>(context);
+    themeProvider=Provider.of<AppThemeProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -133,12 +133,12 @@ class _IntroScreen1State extends State<IntroScreen1> {
         borderRadius: BorderRadius.circular(0.1*width)
       ),
       child: index==0 && isActive?
-      Icon(Icons.wb_sunny_outlined, color:Theme.of(context).dividerColor,):
+      Icon(Icons.wb_sunny_outlined, color:Theme.of(context).dividerColor,size: 12,):
       index==0 && !(isActive)?
-      Icon(Icons.sunny,color:AppColors.primaryLight,):
+      Icon(Icons.sunny,color:AppColors.primaryLight,size: 12,):
       index==1 && !(isActive)?
-      FaIcon(FontAwesome.moon_solid,color: AppColors.primaryLight,):
-      Icon(FontAwesome.moon),
+      FaIcon(FontAwesome.moon_solid,color: AppColors.primaryLight,size: 12,):
+      Icon(FontAwesome.moon,size: 12,),
     );
   }
   void changeLanguage(int index){
@@ -156,9 +156,9 @@ class _IntroScreen1State extends State<IntroScreen1> {
       selectedThemeIndex=index;
     });
     if(index==0){
-      themeProvier.changeAppTheme(ThemeMode.light);
+      themeProvider.changeAppTheme(ThemeMode.light);
     }else{
-      themeProvier.changeAppTheme(ThemeMode.dark);
+      themeProvider.changeAppTheme(ThemeMode.dark);
     }
   }
 }

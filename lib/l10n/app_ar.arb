@@ -30,5 +30,21 @@
    "exhibition": "معرض",
    "holiday": "عطلة",
    "eating": "تناول الطعام",
-   "logout":"تسجيل الخروج"
+   "logout":"تسجيل الخروج",
+   "search_for_event":"ابحث عن الفعالية",
+   "create_event": "إنشاء فعالية",
+   "title": "العنوان",
+   "event_title": "عنوان الفعالية",
+   "description": "الوصف",
+   "event_description": "وصف الفعالية",
+   "event_date": "تاريخ الفعالية",
+   "choose_date": "اختر التاريخ",
+   "event_time": "وقت الفعالية",
+   "choose_time": "اختر الوقت",
+   "location": "الموقع",
+   "choose_event_location": "اختر موقع الفعالية",
+   "add_event": "أضف الفعالية",
+   "missing_event_title_error": "يرجى إدخال عنوان الفعالية",
+   "missing_event_description_error": "يرجى إدخال وصف الفعالية",
+   "no_events_added_yet": "لم تتم إضافة أي فعاليات بعد"
 }

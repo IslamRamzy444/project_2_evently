@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:project_2_evently/models/event.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 
 class EventCardItem extends StatelessWidget {
-  const EventCardItem({super.key});
+  Event event;
+  EventCardItem({super.key,required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class EventCardItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(width: 2,color: AppColors.primaryLight),
-        image: DecorationImage(image: AssetImage(AppAssets.birthdayImageLight,),fit: BoxFit.fill)
+        image: DecorationImage(image: AssetImage(event.image,),fit: BoxFit.fill)
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,8 +33,8 @@ class EventCardItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text("21",style: AppStyles.boldPrimary20,),
-                Text("Nov",style: AppStyles.boldPrimary14,)
+                Text("${event.dateTime.day}",style: AppStyles.boldPrimary20,),
+                Text(DateFormat("MMM").format(event.dateTime),style: AppStyles.boldPrimary14,)
               ],
             ),
           ),
@@ -46,9 +48,9 @@ class EventCardItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text("This is a Birthday Party",style: AppStyles.boldBlack14,)
+                  child: Text(event.title,style: AppStyles.boldBlack14,)
                 ),
-                IconButton(onPressed: (){}, icon: ImageIcon(AssetImage(AppAssets.favoriteIconFilled),color: AppColors.primaryLight,))
+                IconButton(onPressed: (){}, icon: ImageIcon(AssetImage(AppAssets.favoriteIcon),color: AppColors.primaryLight,))
               ],
             ),
           )

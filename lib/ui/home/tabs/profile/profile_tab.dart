@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
+import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/ui/home/tabs/profile/language/language_bottom_sheet.dart';
 import 'package:project_2_evently/ui/home/tabs/profile/theme/theme_bottom_sheet.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
@@ -24,6 +25,7 @@ class _ProfileTabState extends State<ProfileTab> {
     var themeProvider=Provider.of<AppThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         toolbarHeight: 0.25*height,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.02*width),
@@ -37,7 +39,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Route",style: AppStyles.boldWhite24,),
-                    Text("johnsafwat.route@gmail.com",style: AppStyles.mediumWhite16,)
+                    Expanded(child: Text("johnsafwat.route@gmail.com",style: AppStyles.mediumWhite16,))
                   ],
                 )
               ],
@@ -103,24 +105,24 @@ class _ProfileTabState extends State<ProfileTab> {
               ),
             ),
             Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 0.05*width,vertical: 0.025*height),
-                backgroundColor: AppColors.redColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)
-                )
-              ),
+            CustomElevatedButton(
               onPressed: () {
                 
               }, 
-              child: Row(
-                children: [
-                  Icon(Icons.logout,color: AppColors.whiteColor,),
-                  SizedBox(width: 0.02*width,),
-                  Text(AppLocalizations.of(context)!.logout,style:AppStyles.regularWhite20 ,)
-                ],
-              )
+              hasIcon: true,
+              butTitle:AppLocalizations.of(context)!.logout,
+              backgroundColor: AppColors.redColor,
+              borderSideColor: AppColors.redColor,
+              widget: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0.05*width,vertical: 0.01*height),
+                child: Row(
+                  children: [
+                    Icon(Icons.logout,color: AppColors.whiteColor,),
+                    SizedBox(width: 0.02*width,),
+                    Text(AppLocalizations.of(context)!.logout,style:AppStyles.regularWhite20 ,)
+                  ],
+                ),
+              ) ,
             ),
             SizedBox(height: 0.025*height,)
           ],
