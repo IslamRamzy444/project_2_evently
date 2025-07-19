@@ -46,5 +46,17 @@
    "add_event": "أضف الفعالية",
    "missing_event_title_error": "يرجى إدخال عنوان الفعالية",
    "missing_event_description_error": "يرجى إدخال وصف الفعالية",
-   "no_events_added_yet": "لم تتم إضافة أي فعاليات بعد"
+   "no_events_added_yet": "لم تتم إضافة أي فعاليات بعد",
+   "email": "البريد الإلكتروني",
+   "password": "كلمة المرور",
+   "forget_password": "نسيت كلمة المرور؟",
+   "login": "تسجيل الدخول",
+   "do_not_have_account": "ليس لديك حساب ؟",
+   "create_account": "إنشاء حساب",
+   "or": "أو",
+   "login_with_google": "تسجيل الدخول باستخدام جوجل",
+   "empty_email_error": "يرجى إدخال عنوان البريد الإلكتروني",
+   "empty_password_error": "يرجى إدخال كلمة المرور",
+   "invalid_email_error": "يرجى إدخال بريد إلكتروني صالح",
+   "short_password_error": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
 }

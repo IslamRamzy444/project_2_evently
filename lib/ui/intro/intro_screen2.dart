@@ -26,15 +26,15 @@ class _IntroScreen2State extends State<IntroScreen2> {
       bodyFlex: 2,
       titlePadding: EdgeInsets.zero,
     );
-    return SafeArea(
-      child: Scaffold(
-        body: IntroductionScreen(
+    return Scaffold(
+      body: SafeArea(
+        child: IntroductionScreen(
           showBackButton: true,
           next: MyCustomButton(icon: Icons.arrow_forward),
           back: MyCustomButton(icon: Icons.arrow_back),
           done: MyCustomButton(icon: Icons.arrow_forward),
           onDone: () {
-            Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
+            Navigator.pushReplacementNamed(context, AppRoutes.loginScreenRouteName);
           },
           dotsDecorator: DotsDecorator(
             size: Size.fromRadius(0.01*height),
