@@ -20,8 +20,8 @@ class IntroScreen1 extends StatefulWidget {
 class _IntroScreen1State extends State<IntroScreen1> {
   late var width;
   late var height;
-  late var languageProvider;
-  late var themeProvider;
+  late AppLanguageProvider languageProvider;
+  late AppThemeProvider themeProvider;
   int selectedLanguageIndex=0;
   int selectedThemeIndex=0;
   @override
@@ -30,9 +30,11 @@ class _IntroScreen1State extends State<IntroScreen1> {
     height=MediaQuery.sizeOf(context).height;
     languageProvider=Provider.of<AppLanguageProvider>(context);
     themeProvider=Provider.of<AppThemeProvider>(context);
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
+    selectedLanguageIndex=languageProvider.appLanguage=="en"?0:1;
+    selectedThemeIndex=themeProvider.isDarkMode()?1:0;
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.only(left: 0.04*width,right: 0.04*width,bottom: 0.04*height),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

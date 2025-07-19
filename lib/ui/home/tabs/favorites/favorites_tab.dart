@@ -11,9 +11,9 @@ class FavoritesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
-    return SafeArea(
-        child: Scaffold(
-      body: Padding(
+    return Scaffold(
+        body: SafeArea(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0.04 * width),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

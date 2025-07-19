@@ -5,6 +5,7 @@ import 'package:project_2_evently/firebase_options.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/ui/auth/login/login_screen.dart';
 import 'package:project_2_evently/ui/home/home_screen.dart';
 import 'package:project_2_evently/ui/home/tabs/home/add_event/add_event.dart';
 import 'package:project_2_evently/ui/intro/intro_screen1.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.introScreen1RouteName:(context)=>IntroScreen1(),
         AppRoutes.introScreen2RouteName:(context)=>IntroScreen2(),
         AppRoutes.homeScreenRouteName:(context)=>HomeScreen(),
-        AppRoutes.addEventScreenRouteName:(context)=>AddEvent()
+        AppRoutes.addEventScreenRouteName:(context)=>AddEvent(),
+        AppRoutes.loginScreenRouteName:(context)=>LoginScreen()
       },
       locale: Locale(languageProvider.appLanguage),
       theme: AppTheme.lightTheme,

@@ -36,4 +36,6 @@ class AppAssets {
   static const String writingIcon="assets/images/writing-icon.png";
   static const String calendarIcon="assets/images/calendar-icon.png";
   static const String clockIcon="assets/images/clock-icon.png";
+  static const String eventlyLogo2="assets/images/evently-logo2.png";
+  static const String googleLogo="assets/images/google-logo.png";
 }
