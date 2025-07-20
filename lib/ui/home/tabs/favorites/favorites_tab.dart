@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:project_2_evently/providers/event_list_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
-class FavoritesTab extends StatelessWidget {
+import 'package:provider/provider.dart';
+class FavoritesTab extends StatefulWidget {
   FavoritesTab({super.key});
+
+  @override
+  State<FavoritesTab> createState() => _FavoritesTabState();
+}
+
+class _FavoritesTabState extends State<FavoritesTab> {
   TextEditingController searchController=TextEditingController();
+
+  late EventListProvider eventListProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      eventListProvider.getFavoriteList();
+    },);
+  }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
+    eventListProvider=Provider.of<EventListProvider>(context);
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -29,23 +48,19 @@ class FavoritesTab extends StatelessWidget {
               inputStyle: AppStyles.boldPrimary14,
             ),
             Expanded(
-                child: ListView.separated(
+                child:eventListProvider.favoriteList.isEmpty?
+                Center(child: Text(AppLocalizations.of(context)!.no_fav_found,style: Theme.of(context).textTheme.bodyMedium,),) 
+                :ListView.separated(
                     padding: EdgeInsets.only(top: 0.019 * height),
                     itemBuilder: (context, index) {
-                      return Container(
-                        height: 0.3*height,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.primaryLight)
-                        ),
-                      );
+                      return EventCardItem(event: eventListProvider.favoriteList[index]);
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(
                         height: 0.019 * height,
                       );
                     },
-                    itemCount: 20))
+                    itemCount: eventListProvider.favoriteList.length))
           ],
         ),
       ),
