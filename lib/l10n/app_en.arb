@@ -58,5 +58,6 @@
     "empty_email_error":"Please enter an email address",
     "empty_password_error":"Please enter a password",
     "invalid_email_error":"Please enter a valid email",
-    "short_password_error":"Password must be at least 6 char"
+    "short_password_error":"Password must be at least 6 char",
+    "no_fav_found":"No favorite events found yet"
 }
