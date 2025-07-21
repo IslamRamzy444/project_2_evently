@@ -59,5 +59,15 @@
    "empty_password_error": "يرجى إدخال كلمة المرور",
    "invalid_email_error": "يرجى إدخال بريد إلكتروني صالح",
    "short_password_error": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-   "no_fav_found": "لم يتم العثور على فعاليات مفضلة بعد"
+   "no_fav_found": "لم يتم العثور على فعاليات مفضلة بعد",
+   "register": "تسجيل",
+   "name": "الاسم",
+   "empty_name_error": "يرجى إدخال اسم المستخدم",
+   "re_password": "تأكيد كلمة المرور",
+   "empty_re_password_error": "يرجى إدخال تأكيد كلمة المرور",
+   "short_re_password_error": "يجب أن تتكون تأكيد كلمة المرور من 6 أحرف على الأقل",
+   "re_password_matching_error": "تأكيد كلمة المرور لا يطابق كلمة المرور",
+   "already_have_account": "هل لديك حساب بالفعل؟",
+    "empty_date_error": "يرجى اختيار تاريخ لحدثك",
+    "empty_time_error": "يرجى اختيار وقت لحدثك"
 }

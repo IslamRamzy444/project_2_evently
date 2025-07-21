@@ -34,6 +34,8 @@ class _AddEventState extends State<AddEvent> {
   String? formattedDate;
   TimeOfDay? selectedTime;
   String? formattedTime;
+  bool showDateError=false;
+  bool showTimeError=false;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
@@ -243,6 +245,10 @@ class _AddEventState extends State<AddEvent> {
                               ? AppLocalizations.of(context)!.choose_date
                               : formattedDate!,
                           onChooseDateOrTimePressed: chooseDate),
+                          Visibility(
+                            visible: showDateError,
+                            child: Text(AppLocalizations.of(context)!.empty_date_error,style: AppStyles.boldPrimary16.copyWith(color: AppColors.redColor),)
+                          ),
                       SizedBox(
                         height: 0.01 * height,
                       ),
@@ -254,6 +260,10 @@ class _AddEventState extends State<AddEvent> {
                               ? AppLocalizations.of(context)!.choose_time
                               : formattedTime!,
                           onChooseDateOrTimePressed: chooseTime),
+                          Visibility(
+                            visible: showTimeError,
+                            child: Text(AppLocalizations.of(context)!.empty_time_error,style: AppStyles.boldPrimary16.copyWith(color: AppColors.redColor),)
+                          ),
                       SizedBox(
                         height: 0.01 * height,
                       ),
@@ -341,7 +351,28 @@ class _AddEventState extends State<AddEvent> {
   }
 
   void addEvent() {
-    if (_formKey.currentState!.validate()) {
+    if(selectedDate==null){
+      setState(() {
+        showDateError=true;
+      });
+    }else{
+      setState(() {
+        showDateError=false;
+      });
+    }
+    if(selectedTime==null){
+      setState(() {
+        showTimeError=true;
+      });
+    }else{
+      setState(() {
+        showTimeError=false;
+      });
+    }
+    if(_formKey.currentState!.validate() && (selectedDate==null || selectedTime==null)){
+      return;
+    }
+    else if (_formKey.currentState!.validate() && selectedDate!=null && selectedTime!=null) {
       Event event=Event(
         image: selectedImage, 
         title: titleController.text, 

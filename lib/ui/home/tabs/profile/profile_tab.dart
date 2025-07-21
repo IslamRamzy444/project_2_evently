@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
@@ -6,8 +7,10 @@ import 'package:project_2_evently/ui/home/tabs/profile/language/language_bottom_
 import 'package:project_2_evently/ui/home/tabs/profile/theme/theme_bottom_sheet.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
+import 'package:project_2_evently/utils/app_routes.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/utils/dialog_utils.dart';
 import 'package:provider/provider.dart';
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -107,7 +110,7 @@ class _ProfileTabState extends State<ProfileTab> {
             Spacer(),
             CustomElevatedButton(
               onPressed: () {
-                
+                logout();
               }, 
               hasIcon: true,
               butTitle:AppLocalizations.of(context)!.logout,
@@ -141,5 +144,29 @@ class _ProfileTabState extends State<ProfileTab> {
       context: context, 
       builder: (context) => ThemeBottomSheet(),
     );
+  }
+  void logout()async{
+    DialogUtils.showLoading(context: context, loadingText: "Loading ...");
+    try{
+      await FirebaseAuth.instance.signOut();
+      DialogUtils.removeLoading(context: context);
+      DialogUtils.showMessage(
+        context: context,
+        title: "Success", 
+        message: "User logged out successfully",
+        posActionName: "Ok",
+        posAction: (){
+          Navigator.pushReplacementNamed(context, AppRoutes.loginScreenRouteName);
+        }
+      );
+    }on Exception catch(e){
+      DialogUtils.removeLoading(context: context);
+      DialogUtils.showMessage(
+        context: context,
+        title: "Failure", 
+        message: e.toString(),
+        negActionName: "Ok"
+      );
+    }
   }
 }
