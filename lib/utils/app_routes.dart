@@ -5,4 +5,6 @@ class AppRoutes {
   static const String addEventScreenRouteName="add-event-screen";
   static const String loginScreenRouteName="login-screen";
   static const String registerScreenRouteName="register-screen";
+  static const String eventDetailsScreenRouteName="event-details";
+  static const String updateEventScreenRouteName="update-event";
 }

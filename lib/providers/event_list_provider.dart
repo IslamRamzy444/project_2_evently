@@ -108,4 +108,35 @@ class EventListProvider extends ChangeNotifier{
     },).toList();
     notifyListeners();
   }
+  void updateEventDetails({required Event event,required String image,required String title,required String description,required String eventName,required DateTime eventDate,required String eventTime}){
+    FirebaseUtils.getEventsCollection().doc(event.id).update({
+      'image':image,
+      'title':title,
+      'description':description,
+      'event_name':eventName,
+      'date_time':eventDate,
+      'time':eventTime
+    }).timeout(Duration(milliseconds: 500),onTimeout: () {
+      ToastUtils.showMsg(
+        msg: "Event updated successfully", 
+        backgroundColor: AppColors.greenColor, 
+        textColor: AppColors.whiteColor
+      );
+    },);
+    getAllEvents();
+    getFavoriteList();
+    notifyListeners();
+  }
+  void deleteEvent(Event event){
+    FirebaseUtils.getEventsCollection().doc(event.id).delete().timeout((Duration(milliseconds: 500)),onTimeout: () {
+      ToastUtils.showMsg(
+        msg: "Event deleted successfully", 
+        backgroundColor: AppColors.redColor, 
+        textColor: AppColors.whiteColor
+      );
+    },);
+    selectedIndex==0?getAllEvents():getFilterEventsList();
+    getFavoriteList();
+    notifyListeners();
+  }
 }

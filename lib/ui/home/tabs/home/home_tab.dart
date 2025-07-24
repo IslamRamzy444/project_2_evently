@@ -5,6 +5,7 @@ import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_tab_item.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
+import 'package:project_2_evently/utils/app_routes.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:provider/provider.dart';
 class HomeTab extends StatefulWidget {
@@ -15,10 +16,18 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  
+  late EventListProvider eventListProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      eventListProvider.getAllEvents();
+    },);
+  }
   @override
   Widget build(BuildContext context) {
-    var eventListProvider=Provider.of<EventListProvider>(context);
+    eventListProvider=Provider.of<EventListProvider>(context);
     eventListProvider.getItemsOfEvents(context);
     var width=MediaQuery.sizeOf(context).width;
     var height=MediaQuery.sizeOf(context).height;
@@ -110,7 +119,12 @@ class _HomeTabState extends State<HomeTab> {
               :ListView.separated(
                 padding: EdgeInsets.only(top: 0.019*height),
                 itemBuilder: (context, index) {
-                  return EventCardItem(event: eventListProvider.filterEventsList[index],);
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.eventDetailsScreenRouteName,arguments:eventListProvider.filterEventsList[index]);
+                    },
+                    child: EventCardItem(event: eventListProvider.filterEventsList[index],)
+                  );
                 }, 
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 0.019*height,);

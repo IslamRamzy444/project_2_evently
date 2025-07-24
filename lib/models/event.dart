@@ -1,5 +1,5 @@
 class Event {
-  static const String colletionName="Events";
+  static const String collectionName="Events";
   String id;
   String image;
   String title;

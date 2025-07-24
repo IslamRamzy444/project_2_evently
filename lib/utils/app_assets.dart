@@ -38,4 +38,6 @@ class AppAssets {
   static const String clockIcon="assets/images/clock-icon.png";
   static const String eventlyLogo2="assets/images/evently-logo2.png";
   static const String googleLogo="assets/images/google-logo.png";
+  static const String pencilEditingIcon="assets/images/pencil-editing-icon.png";
+  static const String trashDeletingIcon="assets/images/trash-deleting-icon.png";
 }
