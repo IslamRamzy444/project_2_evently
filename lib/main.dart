@@ -9,6 +9,8 @@ import 'package:project_2_evently/ui/auth/login/login_screen.dart';
 import 'package:project_2_evently/ui/auth/register/register_screen.dart';
 import 'package:project_2_evently/ui/home/home_screen.dart';
 import 'package:project_2_evently/ui/home/tabs/home/add_event/add_event.dart';
+import 'package:project_2_evently/ui/home/tabs/home/event_details/event_details.dart';
+import 'package:project_2_evently/ui/home/tabs/home/event_details/update_event/update_event.dart';
 import 'package:project_2_evently/ui/intro/intro_screen1.dart';
 import 'package:project_2_evently/ui/intro/intro_screen2.dart';
 import 'package:project_2_evently/utils/app_routes.dart';
@@ -49,7 +51,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeScreenRouteName:(context)=>HomeScreen(),
         AppRoutes.addEventScreenRouteName:(context)=>AddEvent(),
         AppRoutes.loginScreenRouteName:(context)=>LoginScreen(),
-        AppRoutes.registerScreenRouteName:(context)=>RegisterScreen()
+        AppRoutes.registerScreenRouteName:(context)=>RegisterScreen(),
+        AppRoutes.eventDetailsScreenRouteName:(context)=>EventDetails(),
+        AppRoutes.updateEventScreenRouteName:(context)=>UpdateEvent()
       },
       locale: Locale(languageProvider.appLanguage),
       theme: AppTheme.lightTheme,

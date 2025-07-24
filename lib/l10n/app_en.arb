@@ -69,5 +69,8 @@
     "re_password_matching_error":"Your re password doesn't match with the password",
     "already_have_account":"Already Have Account ?",
     "empty_date_error":"Please pick up a date for your event",
-    "empty_time_error":"Please pick up a time for your event"
+    "empty_time_error":"Please pick up a time for your event",
+    "event_details":"Event Details",
+    "edit_event":"Edit Event",
+    "update_event":"Update Event"
 }

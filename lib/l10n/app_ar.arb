@@ -68,6 +68,9 @@
    "short_re_password_error": "يجب أن تتكون تأكيد كلمة المرور من 6 أحرف على الأقل",
    "re_password_matching_error": "تأكيد كلمة المرور لا يطابق كلمة المرور",
    "already_have_account": "هل لديك حساب بالفعل؟",
-    "empty_date_error": "يرجى اختيار تاريخ لحدثك",
-    "empty_time_error": "يرجى اختيار وقت لحدثك"
+    "empty_date_error": "يرجى اختيار تاريخ لفعاليتك",
+    "empty_time_error": "يرجى اختيار وقت لفعاليتك",
+    "event_details": "تفاصيل الفعالية",
+    "edit_event": "تعديل الفعالية",
+    "update_event": "تحديث الفعالية"
 }

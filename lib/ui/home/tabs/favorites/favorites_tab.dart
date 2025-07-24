@@ -4,6 +4,7 @@ import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
+import 'package:project_2_evently/utils/app_routes.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:provider/provider.dart';
 class FavoritesTab extends StatefulWidget {
@@ -53,7 +54,12 @@ class _FavoritesTabState extends State<FavoritesTab> {
                 :ListView.separated(
                     padding: EdgeInsets.only(top: 0.019 * height),
                     itemBuilder: (context, index) {
-                      return EventCardItem(event: eventListProvider.favoriteList[index]);
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.eventDetailsScreenRouteName,arguments: eventListProvider.favoriteList[index]);
+                        },
+                        child: EventCardItem(event: eventListProvider.favoriteList[index])
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(

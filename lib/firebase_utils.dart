@@ -3,7 +3,7 @@ import 'package:project_2_evently/models/event.dart';
 
 class FirebaseUtils {
   static CollectionReference<Event> getEventsCollection(){
-    return FirebaseFirestore.instance.collection(Event.colletionName).withConverter<Event>(
+    return FirebaseFirestore.instance.collection(Event.collectionName).withConverter<Event>(
       fromFirestore: (snapshot, options) => Event.fromFireStore(snapshot.data()!), 
       toFirestore: (event, options) =>event.toFireStore() ,
     );
