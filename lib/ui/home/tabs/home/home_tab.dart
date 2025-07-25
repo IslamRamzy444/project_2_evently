@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_item.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_tab_item.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
@@ -17,22 +18,16 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   late EventListProvider eventListProvider;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventListProvider.getAllEvents();
-    },);
-  }
+  late UserProvider userProvider;
   @override
   Widget build(BuildContext context) {
     eventListProvider=Provider.of<EventListProvider>(context);
     eventListProvider.getItemsOfEvents(context);
     var width=MediaQuery.sizeOf(context).width;
     var height=MediaQuery.sizeOf(context).height;
+    userProvider=Provider.of<UserProvider>(context);
     if(eventListProvider.eventsList.isEmpty){
-      eventListProvider.getAllEvents();
+      eventListProvider.getAllEvents(userProvider.currentUser!.id);
     }
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +38,7 @@ class _HomeTabState extends State<HomeTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(AppLocalizations.of(context)!.welcome_back,style: AppStyles.regularWhite14,),
-                Text("Route",style: AppStyles.boldWhite24,)
+                Text(userProvider.currentUser!.name,style: AppStyles.boldWhite24,)
               ],
             ),
             Spacer(),
@@ -82,7 +77,7 @@ class _HomeTabState extends State<HomeTab> {
                 length: eventListProvider.itemsOfEvents.length, 
                 child: TabBar(
                   onTap: (index) {
-                    eventListProvider.changeSelectedIndex(index);
+                    eventListProvider.changeSelectedIndex(index,userProvider.currentUser!.id);
                   },
                   isScrollable: true,
                   labelPadding: EdgeInsets.zero,

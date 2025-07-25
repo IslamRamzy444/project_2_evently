@@ -66,8 +66,8 @@ class EventListProvider extends ChangeNotifier{
        },
     ];
   }
-  void getAllEvents() async{
-    QuerySnapshot<Event> querySnapshot=await FirebaseUtils.getEventsCollection().get();
+  void getAllEvents(String uId) async{
+    QuerySnapshot<Event> querySnapshot=await FirebaseUtils.getEventsCollection(uId).get();
     eventsList=querySnapshot.docs.map((doc) {
       return doc.data();
     },).toList();
@@ -77,66 +77,71 @@ class EventListProvider extends ChangeNotifier{
     },);
     notifyListeners();
   }
-  void getFilterEventsList()async{
-    var querySnapshot=await FirebaseUtils.getEventsCollection().where('event_name',isEqualTo:itemsOfEvents[selectedIndex]["name"]).orderBy('date_time').get();
-    filterEventsList=querySnapshot.docs.map((doc) {
+  void getFilterEventsList(String uId)async{
+    var querySnapshot=await FirebaseUtils.getEventsCollection(uId).orderBy('date_time').get();
+    eventsList=querySnapshot.docs.map((doc) {
       return doc.data();
+    },).toList();
+    filterEventsList=eventsList.where((event) {
+      return event.eventName==itemsOfEvents[selectedIndex]["name"];
     },).toList();
     notifyListeners();
   }
-  void changeSelectedIndex(int newSelectedIndex){
+  void changeSelectedIndex(int newSelectedIndex,String uId){
     selectedIndex=newSelectedIndex;
-    selectedIndex==0?getAllEvents():getFilterEventsList();
+    selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
   }
-  void updateEventListFavStatus(Event event){
-    FirebaseUtils.getEventsCollection().doc(event.id).update({'is_favorite':!event.isFavorite}).timeout(Duration(milliseconds: 500),
-    onTimeout: () {
+  void updateEventListFavStatus(Event event,String uId){
+    FirebaseUtils.getEventsCollection(uId).doc(event.id).update({'is_favorite':!event.isFavorite}).then((value) {
       ToastUtils.showMsg(
         msg: "Event updated successfully", 
         backgroundColor: AppColors.greenColor, 
         textColor: AppColors.whiteColor
       );
+      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+      getFavoriteList(uId);
+      notifyListeners();
     },);
-    selectedIndex==0?getAllEvents():getFilterEventsList();
-    getFavoriteList();
-    notifyListeners();
   }
-  void getFavoriteList()async{
-    var querySnapshot=await FirebaseUtils.getEventsCollection().orderBy('date_time').where('is_favorite',isEqualTo: true).get();
+  void getFavoriteList(String uId)async{
+    var querySnapshot=await FirebaseUtils.getEventsCollection(uId).orderBy('date_time').get();
     favoriteList=querySnapshot.docs.map((doc) {
       return doc.data();
     },).toList();
+    favoriteList=favoriteList.where((event) {
+      return event.isFavorite==true;
+    },).toList();
     notifyListeners();
   }
-  void updateEventDetails({required Event event,required String image,required String title,required String description,required String eventName,required DateTime eventDate,required String eventTime}){
-    FirebaseUtils.getEventsCollection().doc(event.id).update({
+  void updateEventDetails({required Event event,required String image,required String title,required String description,required String eventName,required DateTime eventDate,required String eventTime,required String uId}){
+    FirebaseUtils.getEventsCollection(uId).doc(event.id).update({
       'image':image,
       'title':title,
       'description':description,
       'event_name':eventName,
       'date_time':eventDate,
       'time':eventTime
-    }).timeout(Duration(milliseconds: 500),onTimeout: () {
+    }).then((value) {
       ToastUtils.showMsg(
         msg: "Event updated successfully", 
         backgroundColor: AppColors.greenColor, 
         textColor: AppColors.whiteColor
       );
+      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+      getFavoriteList(uId);
+      notifyListeners();
     },);
-    getAllEvents();
-    getFavoriteList();
-    notifyListeners();
   }
-  void deleteEvent(Event event){
-    FirebaseUtils.getEventsCollection().doc(event.id).delete().timeout((Duration(milliseconds: 500)),onTimeout: () {
+  void deleteEvent(Event event,String uId){
+    FirebaseUtils.getEventsCollection(uId).doc(event.id).delete().then((value) {
       ToastUtils.showMsg(
         msg: "Event deleted successfully", 
         backgroundColor: AppColors.redColor, 
         textColor: AppColors.whiteColor
       );
+       selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+       getFavoriteList(uId);
+       notifyListeners();
     },);
-    selectedIndex==0?getAllEvents():getFilterEventsList();
-    getFavoriteList();
-    notifyListeners();
   }
 }

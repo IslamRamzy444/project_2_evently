@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_2_evently/models/event.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +19,7 @@ class EventDetails extends StatelessWidget {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
     var eventListProvider=Provider.of<EventListProvider>(context);
+    var userProvider=Provider.of<UserProvider>(context);
     event = ModalRoute.of(context)?.settings.arguments as Event;
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +45,7 @@ class EventDetails extends StatelessWidget {
                   message: "Are you sure that you want to delete the event",
                   posActionName: "Ok",
                   posAction: (){
-                    eventListProvider.deleteEvent(event);
+                    eventListProvider.deleteEvent(event,userProvider.currentUser!.id);
                     Navigator.pop(context);
                   },
                   negActionName:"Cancel" 

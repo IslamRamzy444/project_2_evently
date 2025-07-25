@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_2_evently/models/event.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
@@ -16,6 +17,7 @@ class EventCardItem extends StatelessWidget {
     var width=MediaQuery.sizeOf(context).width;
     var height=MediaQuery.sizeOf(context).height;
     var eventListProvider=Provider.of<EventListProvider>(context);
+    var userProvider=Provider.of<UserProvider>(context);
     return Container(
       height: 0.35*height,
       padding: EdgeInsets.symmetric(horizontal: 0.02*width,vertical: 0.009*height),
@@ -55,7 +57,7 @@ class EventCardItem extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: (){
-                    eventListProvider.updateEventListFavStatus(event);
+                    eventListProvider.updateEventListFavStatus(event,userProvider.currentUser!.id);
                   }, 
                   icon: ImageIcon(AssetImage(
                     event.isFavorite==true?AppAssets.favoriteIconFilled:AppAssets.favoriteIcon
