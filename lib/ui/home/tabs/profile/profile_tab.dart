@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/ui/home/tabs/profile/language/language_bottom_sheet.dart';
 import 'package:project_2_evently/ui/home/tabs/profile/theme/theme_bottom_sheet.dart';
@@ -26,6 +27,7 @@ class _ProfileTabState extends State<ProfileTab> {
     var height=MediaQuery.sizeOf(context).height;
     var languageProvider=Provider.of<AppLanguageProvider>(context);
     var themeProvider=Provider.of<AppThemeProvider>(context);
+    var userProvider=Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -41,8 +43,8 @@ class _ProfileTabState extends State<ProfileTab> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Route",style: AppStyles.boldWhite24,),
-                    Expanded(child: Text("johnsafwat.route@gmail.com",style: AppStyles.mediumWhite16,))
+                    Text(userProvider.currentUser!.name,style: AppStyles.boldWhite24,),
+                    Expanded(child: Text(userProvider.currentUser!.email,style: AppStyles.mediumWhite16,))
                   ],
                 )
               ],

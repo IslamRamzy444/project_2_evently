@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:project_2_evently/models/event.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/ui/home/tabs/home/add_event/reusable_widgets/date_or_time_widget.dart';
@@ -25,6 +26,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   late Event event;
   final _formKey = GlobalKey<FormState>();
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
   int selectedIndex = 0;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -50,6 +52,7 @@ class _UpdateEventState extends State<UpdateEvent> {
     var height = MediaQuery.sizeOf(context).height;
     var themeProvider = Provider.of<AppThemeProvider>(context);
     eventListProvider=Provider.of<EventListProvider>(context);
+    userProvider=Provider.of<UserProvider>(context);
     List events = [
       {
         "index": 0,
@@ -364,7 +367,8 @@ class _UpdateEventState extends State<UpdateEvent> {
         description: descriptionController.text, 
         eventName: eventName, 
         eventDate: selectedDate!, 
-        eventTime: formattedTime??event.time
+        eventTime: formattedTime??event.time,
+        uId: userProvider.currentUser!.id
       );
       Navigator.pop(context);
       Navigator.pop(context);

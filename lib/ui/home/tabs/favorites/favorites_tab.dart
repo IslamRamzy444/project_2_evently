@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,21 +17,16 @@ class FavoritesTab extends StatefulWidget {
 
 class _FavoritesTabState extends State<FavoritesTab> {
   TextEditingController searchController=TextEditingController();
-
-  late EventListProvider eventListProvider;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventListProvider.getFavoriteList();
-    },);
-  }
+  late UserProvider userProvider;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
-    eventListProvider=Provider.of<EventListProvider>(context);
+    var eventListProvider=Provider.of<EventListProvider>(context);
+    userProvider=Provider.of<UserProvider>(context);
+    if(eventListProvider.favoriteList.isEmpty){
+      eventListProvider.getFavoriteList(userProvider.currentUser!.id);
+    }
     return Scaffold(
         body: SafeArea(
       child: Padding(

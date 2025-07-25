@@ -5,6 +5,7 @@ import 'package:project_2_evently/firebase_utils.dart';
 import 'package:project_2_evently/models/event.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/ui/home/tabs/home/add_event/reusable_widgets/date_or_time_widget.dart';
@@ -25,6 +26,7 @@ class AddEvent extends StatefulWidget {
 class _AddEventState extends State<AddEvent> {
   final _formKey = GlobalKey<FormState>();
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
   int selectedIndex = 0;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -41,6 +43,7 @@ class _AddEventState extends State<AddEvent> {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    userProvider=Provider.of<UserProvider>(context);
     eventListProvider=Provider.of<EventListProvider>(context);
     List events = [
       {
@@ -381,18 +384,17 @@ class _AddEventState extends State<AddEvent> {
         dateTime: selectedDate!, 
         time: formattedTime!
       );
-      FirebaseUtils.addEventToFirestore(event).timeout(Duration(milliseconds:500 ),
-      onTimeout: (){
-      ScaffoldMessenger.of(context).showSnackBar(
+      FirebaseUtils.addEventToFirestore(event,userProvider.currentUser!.id).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: Duration(milliseconds: 650),
           backgroundColor: AppColors.greenColor,
           content: Text('Event added successfully',style: AppStyles.boldPrimary16,)
         ),
       );
-      eventListProvider.changeSelectedIndex(selectedIndex+1);
+      eventListProvider.changeSelectedIndex(selectedIndex+1,userProvider.currentUser!.id);
       Navigator.pop(context);
-      });
+      },);
     }
   }
 }

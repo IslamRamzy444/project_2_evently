@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_2_evently/firebase_utils.dart';
+import 'package:project_2_evently/models/my_user.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
+import 'package:project_2_evently/providers/event_list_provider.dart';
+import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
@@ -252,6 +256,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
+        MyUser myUser=MyUser(id: credential.user?.uid ??'' ,name: nameController.text,email: emailController.text);
+        await FirebaseUtils.addUserToFireStore(myUser);
+        var userProvider=Provider.of<UserProvider>(context,listen: false);
+        userProvider.updateCurrentUser(myUser);
+        var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
         DialogUtils.removeLoading(context: context);
         DialogUtils.showMessage(
           context: context,
