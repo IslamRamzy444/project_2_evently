@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_2_evently/firebase_utils.dart';
+import 'package:project_2_evently/models/my_user.dart';
 import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
@@ -189,7 +191,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 0.03 * height,
                         ),
                         CustomElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              signInWithGoogle();
+                            },
                             backgroundColor: AppColors.transparentColor,
                             borderSideColor: AppColors.primaryLight,
                             hasIcon: true,
@@ -288,6 +292,45 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       }
+    }
+  }
+  void signInWithGoogle()async{
+    try{
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      var userCredential=await FirebaseAuth.instance.signInWithCredential(credential);
+      var firebaseAuthUser=userCredential.user;
+      if(firebaseAuthUser==null){
+        return;
+      }
+      String userId=firebaseAuthUser.uid;
+      MyUser myUser=MyUser(id: userId, name: firebaseAuthUser.displayName??'', email: firebaseAuthUser.email??'');
+      await FirebaseUtils.addUserToFireStore(myUser);
+      var userProvider=Provider.of<UserProvider>(context,listen: false);
+      userProvider.updateCurrentUser(myUser);
+      var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
+      eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+      eventListProvider.getFavoriteList(userProvider.currentUser!.id);
+      DialogUtils.showMessage(
+        context: context,
+        title: "Success", 
+        message: "User logged in successfully",
+        posActionName: "Ok",
+        posAction:(){
+          Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
+        }
+      );
+    }on FirebaseAuthException catch(e){
+      DialogUtils.showMessage(
+        context: context,
+        title: "Failure", 
+        message: e.toString(),
+        negActionName: "Ok"
+      );
     }
   }
 
