@@ -261,7 +261,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         var userProvider=Provider.of<UserProvider>(context,listen: false);
         userProvider.updateCurrentUser(myUser);
         var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
-        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id,context);
         DialogUtils.removeLoading(context: context);
         DialogUtils.showMessage(
           context: context,

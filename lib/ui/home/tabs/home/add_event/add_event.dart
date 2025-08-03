@@ -31,8 +31,11 @@ class _AddEventState extends State<AddEvent> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   DateTime? selectedDate;
-  String eventName='';
+  String englishEventName='';
+  String arabicEventName='';
   String selectedImage='';
+  String lightImage='';
+  String darkImage='';
   String? formattedDate;
   TimeOfDay? selectedTime;
   String? formattedTime;
@@ -49,46 +52,64 @@ class _AddEventState extends State<AddEvent> {
       {
         "index": 0,
         "name": AppLocalizations.of(context)!.sport,
+        "name_en":AppLocalizations.of(context)!.sport_en,
+        "name_ar":AppLocalizations.of(context)!.sport_ar,
         "icon": Icons.directions_bike_outlined
       },
       {
         "index": 1,
         "name": AppLocalizations.of(context)!.birthday,
+        "name_en":AppLocalizations.of(context)!.birthday_en,
+        "name_ar":AppLocalizations.of(context)!.birthday_ar,
         "icon": Icons.cake_outlined
       },
       {
         "index": 2,
         "name": AppLocalizations.of(context)!.meeting,
+        "name_en":AppLocalizations.of(context)!.meeting_en,
+        "name_ar":AppLocalizations.of(context)!.meeting_ar,
         "icon": Icons.meeting_room_outlined
       },
       {
         "index": 3,
         "name": AppLocalizations.of(context)!.gaming,
+        "name_en":AppLocalizations.of(context)!.gaming_en,
+        "name_ar":AppLocalizations.of(context)!.gaming_ar,
         "icon": Icons.games
       },
       {
         "index": 4,
         "name": AppLocalizations.of(context)!.workshop,
+        "name_en":AppLocalizations.of(context)!.workshop_en,
+        "name_ar":AppLocalizations.of(context)!.workshop_ar,
         "icon": Icons.workspaces
       },
       {
         "index": 5,
         "name": AppLocalizations.of(context)!.book_club,
+        "name_en":AppLocalizations.of(context)!.book_club_en,
+        "name_ar":AppLocalizations.of(context)!.book_club_ar,
         "icon": Icons.menu_book
       },
       {
         "index": 6,
         "name": AppLocalizations.of(context)!.exhibition,
+        "name_en":AppLocalizations.of(context)!.exhibition_en,
+        "name_ar":AppLocalizations.of(context)!.exhibition_ar,
         "icon": Icons.museum_outlined
       },
       {
         "index": 7,
         "name": AppLocalizations.of(context)!.holiday,
+        "name_en":AppLocalizations.of(context)!.holiday_en,
+        "name_ar":AppLocalizations.of(context)!.holiday_ar,
         "icon": Icons.holiday_village_outlined
       },
       {
         "index": 8,
         "name": AppLocalizations.of(context)!.eating,
+        "name_en":AppLocalizations.of(context)!.eating_en,
+        "name_ar":AppLocalizations.of(context)!.eating_ar,
         "icon": Icons.restaurant
       },
     ];
@@ -114,8 +135,11 @@ class _AddEventState extends State<AddEvent> {
       AppAssets.holidayImage,
       AppAssets.eatingImage
     ];
-    eventName=events[selectedIndex]["name"];
+    englishEventName=events[selectedIndex]["name_en"];
+    arabicEventName=events[selectedIndex]["name_ar"];
     selectedImage=themeProvider.isDarkMode()? darkEventImagesList[selectedIndex]: eventImagesList[selectedIndex];
+    lightImage=eventImagesList[selectedIndex];
+    darkImage=darkEventImagesList[selectedIndex];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -377,10 +401,12 @@ class _AddEventState extends State<AddEvent> {
     }
     else if (_formKey.currentState!.validate() && selectedDate!=null && selectedTime!=null) {
       Event event=Event(
-        image: selectedImage, 
+        imageLight: lightImage,
+        imageDark: darkImage, 
         title: titleController.text, 
         description: descriptionController.text, 
-        eventName: eventName, 
+        englishEventName: englishEventName,
+        arabicEventName: arabicEventName, 
         dateTime: selectedDate!, 
         time: formattedTime!
       );
@@ -392,7 +418,7 @@ class _AddEventState extends State<AddEvent> {
           content: Text('Event added successfully',style: AppStyles.boldPrimary16,)
         ),
       );
-      eventListProvider.changeSelectedIndex(selectedIndex+1,userProvider.currentUser!.id);
+      eventListProvider.changeSelectedIndex(selectedIndex+1,userProvider.currentUser!.id,context);
       Navigator.pop(context);
       },);
     }

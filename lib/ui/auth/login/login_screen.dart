@@ -261,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
         var userProvider=Provider.of<UserProvider>(context,listen: false);
         userProvider.updateCurrentUser(user);
         var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
-        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id,context);
         eventListProvider.getFavoriteList(userProvider.currentUser!.id);        
         DialogUtils.removeLoading(context: context);        
         DialogUtils.showMessage(
@@ -313,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var userProvider=Provider.of<UserProvider>(context,listen: false);
       userProvider.updateCurrentUser(myUser);
       var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
-      eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+      eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id,context);
       eventListProvider.getFavoriteList(userProvider.currentUser!.id);
       DialogUtils.showMessage(
         context: context,

@@ -77,7 +77,7 @@ class _HomeTabState extends State<HomeTab> {
                 length: eventListProvider.itemsOfEvents.length, 
                 child: TabBar(
                   onTap: (index) {
-                    eventListProvider.changeSelectedIndex(index,userProvider.currentUser!.id);
+                    eventListProvider.changeSelectedIndex(index,userProvider.currentUser!.id,context);
                   },
                   isScrollable: true,
                   labelPadding: EdgeInsets.zero,
