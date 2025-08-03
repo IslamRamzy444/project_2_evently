@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_2_evently/models/event.dart';
+import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
 import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
@@ -11,16 +12,23 @@ import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:project_2_evently/utils/dialog_utils.dart';
 import 'package:provider/provider.dart';
 
-class EventDetails extends StatelessWidget {
+class EventDetails extends StatefulWidget {
   EventDetails({super.key});
+
+  @override
+  State<EventDetails> createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> {
   late Event event;
   @override
   Widget build(BuildContext context) {
+    event = ModalRoute.of(context)!.settings.arguments as Event;
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
     var eventListProvider=Provider.of<EventListProvider>(context);
     var userProvider=Provider.of<UserProvider>(context);
-    event = ModalRoute.of(context)?.settings.arguments as Event;
+    var themeProvider=Provider.of<AppThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: AppColors.primaryLight),
@@ -45,7 +53,7 @@ class EventDetails extends StatelessWidget {
                   message: "Are you sure that you want to delete the event",
                   posActionName: "Ok",
                   posAction: (){
-                    eventListProvider.deleteEvent(event,userProvider.currentUser!.id);
+                    eventListProvider.deleteEvent(event,userProvider.currentUser!.id,context);
                     Navigator.pop(context);
                   },
                   negActionName:"Cancel" 
@@ -65,7 +73,7 @@ class EventDetails extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.asset(event.image),
+                child: Image.asset(themeProvider.isDarkMode()?event.imageDark:event.imageLight),
               ),
               SizedBox(
                 height: 0.019 * height,

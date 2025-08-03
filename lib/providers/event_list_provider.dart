@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:project_2_evently/firebase_utils.dart';
 import 'package:project_2_evently/models/event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/providers/app_language_provider.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
+import 'package:project_2_evently/utils/dialog_utils.dart';
 import 'package:project_2_evently/utils/toast_utils.dart';
+import 'package:provider/provider.dart';
 class EventListProvider extends ChangeNotifier{
   List<Event> eventsList=[];
   List<Event> filterEventsList=[];
@@ -77,28 +80,29 @@ class EventListProvider extends ChangeNotifier{
     },);
     notifyListeners();
   }
-  void getFilterEventsList(String uId)async{
+  void getFilterEventsList(String uId,BuildContext context)async{
+    var languageProvider=Provider.of<AppLanguageProvider>(context);
     var querySnapshot=await FirebaseUtils.getEventsCollection(uId).orderBy('date_time').get();
     eventsList=querySnapshot.docs.map((doc) {
       return doc.data();
     },).toList();
     filterEventsList=eventsList.where((event) {
-      return event.eventName==itemsOfEvents[selectedIndex]["name"];
+      return languageProvider.appLanguage=="en"?event.englishEventName==itemsOfEvents[selectedIndex]["name"]:event.arabicEventName==itemsOfEvents[selectedIndex]["name"];
     },).toList();
     notifyListeners();
   }
-  void changeSelectedIndex(int newSelectedIndex,String uId){
+  void changeSelectedIndex(int newSelectedIndex,String uId,BuildContext context){
     selectedIndex=newSelectedIndex;
-    selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+    selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
   }
-  void updateEventListFavStatus(Event event,String uId){
+  void updateEventListFavStatus(Event event,String uId,BuildContext context){
     FirebaseUtils.getEventsCollection(uId).doc(event.id).update({'is_favorite':!event.isFavorite}).then((value) {
       ToastUtils.showMsg(
         msg: "Event updated successfully", 
         backgroundColor: AppColors.greenColor, 
         textColor: AppColors.whiteColor
       );
-      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
       getFavoriteList(uId);
       notifyListeners();
     },);
@@ -113,33 +117,37 @@ class EventListProvider extends ChangeNotifier{
     },).toList();
     notifyListeners();
   }
-  void updateEventDetails({required Event event,required String image,required String title,required String description,required String eventName,required DateTime eventDate,required String eventTime,required String uId}){
+  void updateEventDetails({required Event event,required String imageLight,required String imageDark,required String title,required String description,required String englishEventName,required String arabicEventName,required DateTime dateTime,required String time,required String uId,required BuildContext context}){
     FirebaseUtils.getEventsCollection(uId).doc(event.id).update({
-      'image':image,
+      'light_image':imageLight,
+      'dark_image':imageDark,
       'title':title,
       'description':description,
-      'event_name':eventName,
-      'date_time':eventDate,
-      'time':eventTime
+      'event_name_en':englishEventName,
+      'event_name_ar':arabicEventName,
+      'date_time':dateTime,
+      'time':time
     }).then((value) {
       ToastUtils.showMsg(
         msg: "Event updated successfully", 
         backgroundColor: AppColors.greenColor, 
         textColor: AppColors.whiteColor
       );
-      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
       getFavoriteList(uId);
       notifyListeners();
-    },);
+    },).catchError((error){
+      DialogUtils.showMessage(context: context, message: error.toString(),negActionName: "Ok",title: "Failure");
+    });
   }
-  void deleteEvent(Event event,String uId){
+  void deleteEvent(Event event,String uId,BuildContext context){
     FirebaseUtils.getEventsCollection(uId).doc(event.id).delete().then((value) {
       ToastUtils.showMsg(
         msg: "Event deleted successfully", 
         backgroundColor: AppColors.redColor, 
         textColor: AppColors.whiteColor
       );
-       selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId);
+       selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
        getFavoriteList(uId);
        notifyListeners();
     },);
