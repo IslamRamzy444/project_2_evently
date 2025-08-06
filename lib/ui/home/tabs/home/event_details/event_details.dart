@@ -20,10 +20,10 @@ class EventDetails extends StatefulWidget {
 }
 
 class _EventDetailsState extends State<EventDetails> {
-  late Event event;
+  Event? myEvent;
   @override
   Widget build(BuildContext context) {
-    event = ModalRoute.of(context)!.settings.arguments as Event;
+    var event =myEvent??ModalRoute.of(context)!.settings.arguments as Event;
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
     var eventListProvider=Provider.of<EventListProvider>(context);
@@ -39,8 +39,13 @@ class _EventDetailsState extends State<EventDetails> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.updateEventScreenRouteName,arguments: event);
+              onPressed: () async{
+                var updatedEvent=await Navigator.pushNamed(context, AppRoutes.updateEventScreenRouteName,arguments: event) as Event?;
+                if (updatedEvent!=null){
+                  setState(() {
+                    myEvent=updatedEvent;
+                  });
+                }
               },
               icon: ImageIcon(
                 AssetImage(AppAssets.pencilEditingIcon),

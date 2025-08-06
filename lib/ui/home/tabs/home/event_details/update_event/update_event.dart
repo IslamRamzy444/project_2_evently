@@ -397,10 +397,7 @@ class _UpdateEventState extends State<UpdateEvent> {
         time: formattedTime??event.time, 
         uId: userProvider.currentUser!.id
       );
-      eventListProvider.getAllEvents(userProvider.currentUser!.id);
-      eventListProvider.getFavoriteList(userProvider.currentUser!.id);
-      Navigator.pop(context);
-      Navigator.pop(context);
+      Navigator.pop(context,event);
     }
   }
 }
