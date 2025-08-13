@@ -81,7 +81,7 @@ class EventListProvider extends ChangeNotifier{
     notifyListeners();
   }
   void getFilterEventsList(String uId,BuildContext context)async{
-    var languageProvider=Provider.of<AppLanguageProvider>(context);
+    var languageProvider=Provider.of<AppLanguageProvider>(context,listen: false);
     var querySnapshot=await FirebaseUtils.getEventsCollection(uId).orderBy('date_time').get();
     eventsList=querySnapshot.docs.map((doc) {
       return doc.data();
@@ -117,24 +117,15 @@ class EventListProvider extends ChangeNotifier{
     },).toList();
     notifyListeners();
   }
-  void updateEventDetails({required Event event,required String imageLight,required String imageDark,required String title,required String description,required String englishEventName,required String arabicEventName,required DateTime dateTime,required String time,required String uId,required BuildContext context}){
-    FirebaseUtils.getEventsCollection(uId).doc(event.id).update({
-      'light_image':imageLight,
-      'dark_image':imageDark,
-      'title':title,
-      'description':description,
-      'event_name_en':englishEventName,
-      'event_name_ar':arabicEventName,
-      'date_time':dateTime,
-      'time':time
-    }).then((value) {
+  Future<void> updateEventDetails({required Event event,required String uId,required BuildContext context}) async{
+    await FirebaseUtils.getEventsCollection(uId).doc(event.id).update(event.toFireStore()).then((value) {
+      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
+      getFavoriteList(uId);
       ToastUtils.showMsg(
         msg: "Event updated successfully", 
         backgroundColor: AppColors.greenColor, 
         textColor: AppColors.whiteColor
       );
-      selectedIndex==0?getAllEvents(uId):getFilterEventsList(uId,context);
-      getFavoriteList(uId);
       notifyListeners();
     },).catchError((error){
       DialogUtils.showMessage(context: context, message: error.toString(),negActionName: "Ok",title: "Failure");
