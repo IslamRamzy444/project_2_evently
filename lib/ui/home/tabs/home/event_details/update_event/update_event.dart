@@ -382,22 +382,27 @@ class _UpdateEventState extends State<UpdateEvent> {
     });
   }
 
-  void updateEvent() {
+  Future<void> updateEvent() async{
     if (_formKey.currentState!.validate()) {
-      eventListProvider.updateEventDetails(
-        context: context,
-        event: event,
-        imageLight: lightImage,
-        imageDark: darkImage,
-        title: titleController.text,
-        description: descriptionController.text,
-        englishEventName: englishEventName,
-        arabicEventName: arabicEventName,
-        dateTime: selectedDate??event.dateTime,
-        time: formattedTime??event.time, 
-        uId: userProvider.currentUser!.id
+      Event myEvent=Event(
+        id: event.id,
+        imageLight: lightImage, 
+        imageDark: darkImage, 
+        title: titleController.text, 
+        description: descriptionController.text, 
+        englishEventName: englishEventName, 
+        arabicEventName: arabicEventName, 
+        dateTime: selectedDate??event.dateTime, 
+        time: formattedTime??event.time,
+        isFavorite: event.isFavorite
       );
-      Navigator.pop(context,event);
+      await eventListProvider.updateEventDetails(
+        context: context,
+        event: myEvent, 
+        uId: userProvider.currentUser!.id
+      ).then((value) {
+        Navigator.pop(context,myEvent);
+      },);
     }
   }
 }
