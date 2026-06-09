@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/ui/home/tabs/favorites/favorites_tab.dart';
 import 'package:project_2_evently/ui/home/tabs/home/home_tab.dart';
 import 'package:project_2_evently/ui/home/tabs/map/map_tab.dart';

@@ -9,13 +9,15 @@ import 'package:project_2_evently/providers/event_list_provider.dart';
 import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/reusable_widgets/custom_elevated_button.dart';
 import 'package:project_2_evently/reusable_widgets/custom_text_form_field.dart';
+import 'package:project_2_evently/ui/auth/login/login_navigator.dart';
+import 'package:project_2_evently/ui/auth/login/login_screen_view_model.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_routes.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:project_2_evently/utils/dialog_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,12 +27,16 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+class _LoginScreenState extends State<LoginScreen> implements LoginNavigator{
+  LoginScreenViewModel viewModel=LoginScreenViewModel();
   int selectedLanguageIndex = 0;
   late AppLanguageProvider languageProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.navigator=this;
+  }
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
@@ -53,12 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 0.03 * height,
                 ),
                 Form(
-                    key: _formKey,
+                    key: viewModel.formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         CustomTextFormField(
-                          controller: emailController,
+                          controller: viewModel.emailController,
                           borderSideColor: themeProvider.isDarkMode()
                               ? AppColors.primaryLight
                               : AppColors.greyColor,
@@ -87,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 0.01 * height,
                         ),
                         CustomTextFormField(
-                          controller: passwordController,
+                          controller: viewModel.passwordController,
                           obscureText: true,
                           borderSideColor: themeProvider.isDarkMode()
                               ? AppColors.primaryLight
@@ -136,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomElevatedButton(
                             onPressed: () {
-                              login();
+                              viewModel.login();
                             },
                             butTitle: AppLocalizations.of(context)!.login),
                         SizedBox(
@@ -246,54 +252,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  void login() async {
-    if (_formKey.currentState!.validate()) {
-      DialogUtils.showLoading(context: context, loadingText: "Loading ...");
-      try {
-        final credential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text);
-        var user=await FirebaseUtils.readUserFromFirestore(credential.user?.uid??'');
-        if(user==null){
-          return;
-        }
-        var userProvider=Provider.of<UserProvider>(context,listen: false);
-        userProvider.updateCurrentUser(user);
-        var eventListProvider=Provider.of<EventListProvider>(context,listen: false);
-        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id,context);
-        eventListProvider.getFavoriteList(userProvider.currentUser!.id);        
-        DialogUtils.removeLoading(context: context);        
-        DialogUtils.showMessage(
-          context: context,
-          title: "Success", 
-          message: "User logged in successfully",
-          posActionName: "Ok",
-          posAction:(){
-            Navigator.pushReplacementNamed(context, AppRoutes.homeScreenRouteName);
-          }
-        );
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
-          DialogUtils.removeLoading(context: context);
-          DialogUtils.showMessage(
-            context: context,
-            title: "Failure", 
-            message: 'Invalid login credentials.',
-            negActionName: "Ok"
-          );
-        } else {
-          DialogUtils.removeLoading(context: context);
-          DialogUtils.showMessage(
-            context: context,
-            title: "Failure", 
-            message: e.code,
-            negActionName: "Ok"
-          );
-        }
-      }
-    }
-  }
   void signInWithGoogle()async{
     try{
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -360,5 +318,20 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       languageProvider.changeLanguage('ar');
     }
+  }
+  
+  @override
+  void hideLoading() {
+    DialogUtils.removeLoading(context: context);
+  }
+  
+  @override
+  void showLoadingMessage(String message) {
+    DialogUtils.showLoading(context: context, loadingText: message);
+  }
+  
+  @override
+  void showMessage(String message) {
+    DialogUtils.showMessage(context: context, message: message,posActionName: "Ok");
   }
 }

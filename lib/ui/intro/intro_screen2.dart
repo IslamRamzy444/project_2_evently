@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:project_2_evently/ui/intro/reusable_widgets/my_custom_button.dart';
 import 'package:project_2_evently/utils/app_assets.dart';

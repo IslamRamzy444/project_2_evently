@@ -14,7 +14,7 @@ import 'package:project_2_evently/ui/home/tabs/home/event_details/update_event/u
 import 'package:project_2_evently/ui/intro/intro_screen1.dart';
 import 'package:project_2_evently/ui/intro/intro_screen2.dart';
 import 'package:project_2_evently/utils/app_routes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/utils/app_theme.dart';
 import 'package:provider/provider.dart';
 void main() async{

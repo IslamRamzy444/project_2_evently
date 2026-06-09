@@ -12,7 +12,7 @@ import 'package:project_2_evently/ui/home/tabs/home/add_event/reusable_widgets/d
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_tab_item.dart';
 import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/providers/event_list_provider.dart';
 import 'package:project_2_evently/providers/user_provider.dart';
 import 'package:project_2_evently/ui/home/tabs/home/reusable_widgets/event_card_item.dart';

@@ -10,7 +10,7 @@ import 'package:project_2_evently/utils/app_assets.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_routes.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/utils/dialog_utils.dart';
 import 'package:provider/provider.dart';
 class ProfileTab extends StatefulWidget {

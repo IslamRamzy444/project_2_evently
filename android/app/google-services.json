@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "204013128138-rmrct13tt75duhc9u0k9s8nul3v1o6io.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project_2_evently",
+            "certificate_hash": "23ac22a0f1b587a1a31d53f3019df56ee5c13469"
+          }
+        },
+        {
           "client_id": "204013128138-l3svuite13vpc6r0i37acgkkt2cfltdv.apps.googleusercontent.com",
           "client_type": 3
         }

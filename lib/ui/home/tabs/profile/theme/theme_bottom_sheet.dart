@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_2_evently/l10n/app_localizations.dart';
 import 'package:project_2_evently/providers/app_theme_provider.dart';
 import 'package:project_2_evently/utils/app_colors.dart';
 import 'package:project_2_evently/utils/app_styles.dart';
