@@ -175,7 +175,10 @@ class FirebaseUtils {
   static Future<void> addUserToFireStore(MyUser myUser)
   static Future<MyUser?> readUserFromFirestore(String id)
 }
+```
+
 Clean separation of Firestore logic from UI.
+
 ---
 ## EventListProvider (Key Methods)
 
