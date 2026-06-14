@@ -168,7 +168,6 @@ lib/
 ## Firebase Utils Pattern
 
 ```dart
-
 class FirebaseUtils {
   static CollectionReference<Event> getEventsCollection(String uId)
   static Future<void> addEventToFirestore(Event event, String uId)
